@@ -1,0 +1,22 @@
+@startuml
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist
+!includeurl AWSPuml/AWSCommon.puml
+!includeurl AWSPuml/EndUserComputing/all.puml
+!includeurl AWSPuml/Storage/SimpleStorageServiceS3.puml
+!includeurl AWSPuml/Compute/EC2.puml
+!includeurl AWSPuml/SecurityIdentityAndCompliance/Cognito.puml
+!includeurl AWSPuml/Database/RDS.puml
+
+actor "Student" as student
+EC2(serverLogin, "Уеб-сайт ProjectEstimation", "Регистрация/Вход")
+Cognito(loginReg, "Аутентикация", "валидация на име, парола и имейл", "User pool Estimateme")
+EC2(server, "Уеб-сайт ProjectEstimation", "създаване на проекти и задачи, навигиране")
+RDS(db, "MySQL бази данни", "таблици за задачи, проекти, etc")
+
+
+student --> serverLogin
+serverLogin --> loginReg
+loginReg --> server
+server --> db
+db--> server
+@enduml
